@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>بلاك فاير | لوحة القيادة</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/theme.css"/>
+</head>
+<body class="bg-base text-ink font-body flex flex-col min-h-screen relative overflow-x-hidden">
+<div class="ember-field"></div>
+
+<header class="fixed top-0 w-full z-40 pt-safe glass-strong">
+  <div class="max-w-3xl mx-auto">
+    <div class="h-16 px-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-lg bg-surface-highest emblem-ring flex items-center justify-center">
+          <svg viewBox="0 0 48 48" class="w-5 h-5"><path fill="#ff7a1a" d="M24 3c3 6-2 8-2 13 0 4 3 6 6 6 4 0 6-4 6-4s2 9-4 15c-4 4-9 5-13 3-5-2-8-7-7-13 1-7 6-8 6-13 0-4-2-6-2-6s6-3 10-1z"/></svg>
+        </div>
+        <span class="font-display text-sm font-bold text-fire-light">بلاك فاير</span>
+      </div>
+      <a href="login.html" class="flex items-center gap-1.5 text-[11px] text-ember font-bold">خروج <span class="material-symbols-outlined text-[16px]">logout</span></a>
+    </div>
+    <div class="flex gap-1.5 overflow-x-auto px-4 pb-2.5" data-tab-group id="top-tabs">
+      <button class="tab-btn active" data-tab-target="#tab-leaders">القادة</button>
+      <button class="tab-btn" data-tab-target="#tab-deputies">النواب</button>
+      <button class="tab-btn" data-tab-target="#tab-bank-official">مسؤول البنك</button>
+      <button class="tab-btn" data-tab-target="#tab-store-official">مسؤول المتجر</button>
+      <button class="tab-btn" data-tab-target="#tab-passwords">تغيير الباسورد</button>
+      <button class="tab-btn" data-tab-target="#tab-stats">الإحصائيات</button>
+      <button class="tab-btn" data-tab-target="#tab-settings">الإعدادات</button>
+    </div>
+  </div>
+</header>
+
+<main class="flex-1 w-full pt-32 pb-16 max-w-3xl mx-auto px-4 space-y-4 relative z-10">
+
+  <div class="card p-4 text-center">
+    <p class="text-sm font-bold text-fire-light">مرحباً بك يا قائد 👑</p>
+  </div>
+
+  <!-- القادة -->
+  <div id="tab-leaders" class="tab-panel active">
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-bold text-fire-light">إدارة القيادة</h3>
+        <button onclick="openPersonForm('leaders')" class="btn-fire text-[11px] px-3 py-2 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">person_add</span> إضافة قائد جديد</button>
+      </div>
+      <div class="flex items-center gap-2 field px-3 py-2 mb-3">
+        <span class="material-symbols-outlined text-muted text-[16px]">search</span>
+        <input id="leader-search" oninput="renderLeaders()" class="bg-transparent outline-none text-xs text-ink w-full" placeholder="بحث عن قائد باللقب"/>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="tbl">
+          <thead><tr><th>#</th><th>اللقب</th><th>المنصب</th><th>الرقم</th><th>الإجراءات</th></tr></thead>
+          <tbody id="leaders-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- النواب -->
+  <div id="tab-deputies" class="tab-panel">
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-bold text-fire-light">إدارة النواب</h3>
+        <button onclick="openPersonForm('deputies')" class="btn-fire text-[11px] px-3 py-2 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">person_add</span> إضافة نائب جديد</button>
+      </div>
+      <div class="flex items-center gap-2 field px-3 py-2 mb-3">
+        <span class="material-symbols-outlined text-muted text-[16px]">search</span>
+        <input id="deputy-search" oninput="renderDeputies()" class="bg-transparent outline-none text-xs text-ink w-full" placeholder="بحث عن نائب باللقب"/>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="tbl">
+          <thead><tr><th>#</th><th>اللقب</th><th>المنصب</th><th>الرقم</th><th>الإجراءات</th></tr></thead>
+          <tbody id="deputies-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- مسؤول البنك -->
+  <div id="tab-bank-official" class="tab-panel">
+    <div class="card p-4 space-y-3">
+      <h3 class="text-sm font-bold text-fire-light mb-1">إدارة مسؤول البنك</h3>
+      <label class="text-[11px] text-muted block">لقب مسؤول البنك</label>
+      <input id="bo-name" class="field w-full px-3 py-2.5 text-sm"/>
+      <label class="text-[11px] text-muted block">المنصب</label>
+      <input id="bo-title" class="field w-full px-3 py-2.5 text-sm"/>
+      <label class="text-[11px] text-muted block">رقم الواتساب</label>
+      <input id="bo-phone" class="field w-full px-3 py-2.5 text-sm" dir="ltr"/>
+      <button onclick="saveOfficial('bank')" class="btn-fire w-full py-3 rounded-xl text-sm mt-1">حفظ التعديلات</button>
+    </div>
+  </div>
+
+  <!-- مسؤول المتجر -->
+  <div id="tab-store-official" class="tab-panel">
+    <div class="card p-4 space-y-3">
+      <h3 class="text-sm font-bold text-fire-light mb-1">إدارة مسؤول المتجر</h3>
+      <label class="text-[11px] text-muted block">لقب مسؤول المتجر</label>
+      <input id="so-name" class="field w-full px-3 py-2.5 text-sm"/>
+      <label class="text-[11px] text-muted block">المنصب</label>
+      <input id="so-title" class="field w-full px-3 py-2.5 text-sm"/>
+      <label class="text-[11px] text-muted block">رقم الواتساب</label>
+      <input id="so-phone" class="field w-full px-3 py-2.5 text-sm" dir="ltr"/>
+      <button onclick="saveOfficial('store')" class="btn-fire w-full py-3 rounded-xl text-sm mt-1">حفظ التعديلات</button>
+    </div>
+  </div>
+
+  <!-- تغيير الباسورد -->
+  <div id="tab-passwords" class="tab-panel space-y-4">
+    <div class="card p-4 space-y-3">
+      <h3 class="text-sm font-bold text-fire-light flex items-center gap-1.5"><span class="material-symbols-outlined text-fire text-[18px]">lock</span> باسورد البنك الجديد</h3>
+      <input id="pw-bank" type="password" class="field w-full px-3 py-2.5 text-sm" placeholder="أدخل باسورد البنك الجديد"/>
+      <button onclick="updatePassword('bank')" class="btn-fire w-full py-3 rounded-xl text-sm">تحديث باسورد البنك</button>
+    </div>
+    <div class="card p-4 space-y-3">
+      <h3 class="text-sm font-bold text-fire-light flex items-center gap-1.5"><span class="material-symbols-outlined text-fire text-[18px]">lock</span> باسورد المتجر الجديد</h3>
+      <input id="pw-store" type="password" class="field w-full px-3 py-2.5 text-sm" placeholder="أدخل باسورد المتجر الجديد"/>
+      <button onclick="updatePassword('store')" class="btn-fire w-full py-3 rounded-xl text-sm">تحديث باسورد المتجر</button>
+    </div>
+    <div class="card p-4 space-y-2">
+      <h3 class="text-sm font-bold text-fire-light mb-1">الباسوردات الحالية</h3>
+      <p class="text-[11px] text-muted">باسورد البنك: <span id="cur-pw-bank" class="text-ink font-mono"></span></p>
+      <p class="text-[11px] text-muted">باسورد المتجر: <span id="cur-pw-store" class="text-ink font-mono"></span></p>
+    </div>
+  </div>
+
+  <!-- الإحصائيات -->
+  <div id="tab-stats" class="tab-panel">
+    <div class="card p-4">
+      <h3 class="text-sm font-bold text-fire-light mb-3">الإحصائيات الشاملة</h3>
+      <div class="grid grid-cols-3 gap-2.5" id="stats-grid"></div>
+      <button onclick="renderStatsGrid()" class="btn-ghost w-full py-2.5 rounded-xl text-xs mt-3 flex items-center justify-center gap-1.5">
+        <span class="material-symbols-outlined text-[16px]">refresh</span> تحديث الإحصائيات
+      </button>
+    </div>
+  </div>
+
+  <!-- الإعدادات -->
+  <div id="tab-settings" class="tab-panel space-y-4">
+    <div class="card p-4 space-y-3">
+      <h3 class="text-sm font-bold text-fire-light mb-1">التحكم الشامل ببوابات النظام</h3>
+      <div class="flex items-center justify-between py-1.5">
+        <span class="text-xs text-ink">تفعيل بوابة البنك</span>
+        <label class="switch"><input type="checkbox" id="toggle-bank" onchange="saveToggles()"/><span class="track"><span class="knob"></span></span></label>
+      </div>
+      <div class="flex items-center justify-between py-1.5">
+        <span class="text-xs text-ink">تفعيل بوابة المتجر</span>
+        <label class="switch"><input type="checkbox" id="toggle-store" onchange="saveToggles()"/><span class="track"><span class="knob"></span></span></label>
+      </div>
+      <div class="pt-2">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-xs text-ink">نسبة العمولة</span>
+          <span id="commission-display" class="text-xs font-bold text-fire">5%</span>
+        </div>
+        <input id="commission-slider" type="range" min="0" max="30" value="5" class="fire-range" oninput="onCommissionInput(this.value)"/>
+      </div>
+    </div>
+
+    <div class="card p-4 space-y-3">
+      <h3 class="text-sm font-bold text-fire-light mb-1">الإعدادات والصيانة</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        <button onclick="confirmWipeMembers()" class="btn-danger py-2.5 rounded-xl text-[11px] flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[16px]">person_remove</span> حذف جميع الأعضاء</button>
+        <button onclick="confirmResetBalances()" class="btn-danger py-2.5 rounded-xl text-[11px] flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[16px]">restart_alt</span> تصفير أرصدة الأعضاء</button>
+        <button onclick="downloadBackup()" class="btn-ghost py-2.5 rounded-xl text-[11px] flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[16px]">download</span> تنزيل قاعدة البيانات</button>
+      </div>
+    </div>
+
+    <div class="card p-4">
+      <h3 class="text-sm font-bold text-fire-light mb-3">سجل الحركات الحساسة والأمان</h3>
+      <div id="activity-log" class="space-y-2 max-h-64 overflow-y-auto"></div>
+    </div>
+  </div>
+
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+  BlackFire.requireAdmin();
+  BlackFire.initTabs();
+  const db = BlackFire.load();
+
+  function logActivity(text, level = "info") {
+    db.activityLog.unshift({ id: BlackFire.uid("log"), text, level, date: "الآن" });
+    BlackFire.save(db);
+    renderLog();
+  }
+
+  /* ---------- Leaders / Deputies ---------- */
+  function renderPeople(key, tbodyId, searchId) {
+    const q = (document.getElementById(searchId)?.value || "").trim().toLowerCase();
+    const list = db[key].filter(p => !q || p.name.toLowerCase().includes(q));
+    document.getElementById(tbodyId).innerHTML = list.map((p, idx) => `
+      <tr>
+        <td>${idx}</td>
+        <td class="font-semibold">${p.name}</td>
+        <td>${p.title}</td>
+        <td dir="ltr">${p.phone}</td>
+        <td class="flex gap-1.5">
+          <button onclick='editPerson("${key}","${p.id}")' class="btn-ghost text-[10px] px-2 py-1 rounded-md">تعديل</button>
+          <button onclick='deletePerson("${key}","${p.id}")' class="btn-danger text-[10px] px-2 py-1 rounded-md">حذف</button>
+        </td>
+      </tr>
+    `).join("") || `<tr><td colspan="5" class="text-center text-muted py-4">لا يوجد أعضاء</td></tr>`;
+  }
+  function renderLeaders() { renderPeople("leaders", "leaders-tbody", "leader-search"); }
+  function renderDeputies() { renderPeople("deputies", "deputies-tbody", "deputy-search"); }
+
+  function deletePerson(key, id) {
+    db[key] = db[key].filter(p => p.id !== id);
+    BlackFire.save(db);
+    key === "leaders" ? renderLeaders() : renderDeputies();
+    logActivity(`حذف ${key === "leaders" ? "قائد" : "نائب"}`, "danger");
+    BlackFire.toast("تم الحذف", "", "success");
+  }
+
+  function openPersonForm(key, existing) {
+    const title = key === "leaders" ? "قائد" : "نائب";
+    BlackFire.openModal(`
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-base text-ink">${existing ? "تعديل" : "إضافة"} ${title}</h3>
+        <button onclick="BlackFire.closeModal()" class="text-muted"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="space-y-3">
+        <input id="pf-name" class="field w-full px-3 py-2.5 text-sm" placeholder="اللقب" value="${existing?.name || ''}"/>
+        <input id="pf-title" class="field w-full px-3 py-2.5 text-sm" placeholder="المنصب" value="${existing?.title || (key==='leaders' ? 'القائد' : 'نائب')}"/>
+        <input id="pf-phone" class="field w-full px-3 py-2.5 text-sm" dir="ltr" placeholder="رقم الواتساب" value="${existing?.phone || ''}"/>
+        <button onclick="submitPerson('${key}','${existing?.id || ''}')" class="btn-fire w-full py-3 rounded-xl text-sm">حفظ</button>
+      </div>
+    `);
+  }
+  function editPerson(key, id) {
+    const p = db[key].find(x => x.id === id);
+    openPersonForm(key, p);
+  }
+  function submitPerson(key, id) {
+    const name = document.getElementById("pf-name").value.trim();
+    const titleVal = document.getElementById("pf-title").value.trim();
+    const phone = document.getElementById("pf-phone").value.trim();
+    if (!name || !phone) { BlackFire.toast("أكمل البيانات المطلوبة", "", "error"); return; }
+    if (id) {
+      const p = db[key].find(x => x.id === id);
+      Object.assign(p, { name, title: titleVal, phone });
+    } else {
+      db[key].push({ id: BlackFire.uid(key === "leaders" ? "ldr" : "dep"), name, title: titleVal, phone, avatar: key === "leaders" ? "👑" : "🎖️" });
+    }
+    BlackFire.save(db);
+    key === "leaders" ? renderLeaders() : renderDeputies();
+    BlackFire.closeModal();
+    logActivity(`${id ? "تعديل" : "إضافة"} ${key === "leaders" ? "قائد" : "نائب"}: ${name}`);
+    BlackFire.toast("تم الحفظ بنجاح", name, "success");
+  }
+
+  /* ---------- Officials ---------- */
+  function loadOfficials() {
+    document.getElementById("bo-name").value = db.bankOfficial.name;
+    document.getElementById("bo-title").value = db.bankOfficial.title;
+    document.getElementById("bo-phone").value = db.bankOfficial.phone;
+    document.getElementById("so-name").value = db.storeOfficial.name;
+    document.getElementById("so-title").value = db.storeOfficial.title;
+    document.getElementById("so-phone").value = db.storeOfficial.phone;
+  }
+  function saveOfficial(kind) {
+    if (kind === "bank") {
+      db.bankOfficial = { ...db.bankOfficial, name: document.getElementById("bo-name").value.trim(), title: document.getElementById("bo-title").value.trim(), phone: document.getElementById("bo-phone").value.trim() };
+    } else {
+      db.storeOfficial = { ...db.storeOfficial, name: document.getElementById("so-name").value.trim(), title: document.getElementById("so-title").value.trim(), phone: document.getElementById("so-phone").value.trim() };
+    }
+    BlackFire.save(db);
+    logActivity(`تحديث بيانات مسؤول ${kind === "bank" ? "البنك" : "المتجر"}`);
+    BlackFire.toast("تم حفظ التعديلات", "", "success");
+  }
+
+  /* ---------- Passwords ---------- */
+  function refreshPasswordDisplay() {
+    document.getElementById("cur-pw-bank").textContent = db.passwords.bank;
+    document.getElementById("cur-pw-store").textContent = db.passwords.store;
+  }
+  function updatePassword(kind) {
+    const val = document.getElementById(`pw-${kind}`).value.trim();
+    if (!val || val.length < 6) { BlackFire.toast("الباسورد قصير جدًا", "6 أحرف على الأقل", "error"); return; }
+    db.passwords[kind] = val;
+    BlackFire.save(db);
+    document.getElementById(`pw-${kind}`).value = "";
+    refreshPasswordDisplay();
+    logActivity(`تحديث باسورد ${kind === "bank" ? "البنك" : "المتجر"}`, "warn");
+    BlackFire.toast("تم تحديث الباسورد", "", "success");
+  }
+
+  /* ---------- Stats ---------- */
+  function renderStatsGrid() {
+    const totalBalances = db.members.reduce((a, m) => a + m.balance, 0);
+    const cards = [
+      { icon: "person", label: "عدد النواب", val: db.deputies.length },
+      { icon: "military_tech", label: "عدد القادة", val: db.leaders.length },
+      { icon: "groups", label: "عدد الأعضاء", val: db.members.length },
+      { icon: "inventory_2", label: "عدد السلع", val: db.items.length },
+      { icon: "category", label: "أقسام المتجر", val: db.sections.length },
+      { icon: "savings", label: "إجمالي الأرصدة", val: BlackFire.money(totalBalances) },
+      { icon: "sync_alt", label: "عدد التحويلات", val: BlackFire.money(db.stats.transfers) },
+      { icon: "payments", label: "إجمالي الإيرادات", val: "$" + BlackFire.money(db.stats.revenue) },
+      { icon: "shopping_cart", label: "عدد الطلبات", val: db.orders.length },
+      { icon: "local_fire_department", label: "عمليات الغارة", val: db.stats.raids },
+    ];
+    document.getElementById("stats-grid").innerHTML = cards.map(c => `
+      <div class="card p-3.5 flex flex-col items-center gap-1.5">
+        <span class="material-symbols-outlined text-fire text-[22px]">${c.icon}</span>
+        <span class="font-display text-lg font-bold text-ink">${c.val}</span>
+        <span class="text-[10px] text-muted text-center">${c.label}</span>
+      </div>
+    `).join("");
+    BlackFire.toast("تم تحديث الإحصائيات", "", "success");
+  }
+
+  /* ---------- Settings ---------- */
+  function loadToggles() {
+    document.getElementById("toggle-bank").checked = db.toggles.bankPortal;
+    document.getElementById("toggle-store").checked = db.toggles.storePortal;
+    document.getElementById("commission-slider").value = db.commission;
+    document.getElementById("commission-display").textContent = db.commission + "%";
+    document.getElementById("commission-slider").style.setProperty("--val", db.commission / 30 * 100 + "%");
+  }
+  function saveToggles() {
+    db.toggles.bankPortal = document.getElementById("toggle-bank").checked;
+    db.toggles.storePortal = document.getElementById("toggle-store").checked;
+    BlackFire.save(db);
+    logActivity("تعديل حالة بوابات النظام", "warn");
+    BlackFire.toast("تم تحديث البوابات", "", "success");
+  }
+  function onCommissionInput(v) {
+    document.getElementById("commission-display").textContent = v + "%";
+    document.getElementById("commission-slider").style.setProperty("--val", (v / 30 * 100) + "%");
+    db.commission = Number(v);
+    BlackFire.save(db);
+  }
+
+  function confirmWipeMembers() {
+    BlackFire.openModal(`
+      <div class="text-center space-y-3">
+        <span class="material-symbols-outlined text-ember text-[40px]">warning</span>
+        <h3 class="font-bold text-base text-ink">حذف جميع الأعضاء؟</h3>
+        <p class="text-xs text-muted">هذا الإجراء سيحذف كل الأعضاء من قاعدة البيانات ولا يمكن التراجع عنه.</p>
+        <div class="flex gap-2 pt-2">
+          <button onclick="BlackFire.closeModal()" class="btn-ghost flex-1 py-2.5 rounded-xl text-xs">إلغاء</button>
+          <button onclick="wipeMembers()" class="btn-danger flex-1 py-2.5 rounded-xl text-xs">تأكيد الحذف</button>
+        </div>
+      </div>
+    `);
+  }
+  function wipeMembers() {
+    db.members = [];
+    BlackFire.save(db);
+    BlackFire.closeModal();
+    logActivity("حذف جميع الأعضاء من قاعدة البيانات", "danger");
+    BlackFire.toast("تم حذف جميع الأعضاء", "", "success");
+    renderStatsGrid();
+  }
+  function confirmResetBalances() {
+    BlackFire.openModal(`
+      <div class="text-center space-y-3">
+        <span class="material-symbols-outlined text-ember text-[40px]">warning</span>
+        <h3 class="font-bold text-base text-ink">تصفير أرصدة الأعضاء؟</h3>
+        <p class="text-xs text-muted">سيتم ضبط رصيد جميع الأعضاء إلى صفر مباشرة.</p>
+        <div class="flex gap-2 pt-2">
+          <button onclick="BlackFire.closeModal()" class="btn-ghost flex-1 py-2.5 rounded-xl text-xs">إلغاء</button>
+          <button onclick="resetBalances()" class="btn-danger flex-1 py-2.5 rounded-xl text-xs">تأكيد التصفير</button>
+        </div>
+      </div>
+    `);
+  }
+  function resetBalances() {
+    db.members.forEach(m => m.balance = 0);
+    BlackFire.save(db);
+    BlackFire.closeModal();
+    logActivity("تصفير أرصدة جميع الأعضاء", "danger");
+    BlackFire.toast("تم تصفير الأرصدة", "", "success");
+    renderStatsGrid();
+  }
+  function downloadBackup() {
+    const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "blackfire-backup.json"; a.click();
+    URL.revokeObjectURL(url);
+    logActivity("تنزيل نسخة احتياطية من قاعدة البيانات");
+    BlackFire.toast("جارِ تنزيل قاعدة البيانات", "", "success");
+  }
+
+  function renderLog() {
+    const iconFor = { info: "info", warn: "warning", danger: "gpp_bad" };
+    const colorFor = { info: "text-fire", warn: "text-gold", danger: "text-ember" };
+    document.getElementById("activity-log").innerHTML = db.activityLog.slice(0, 12).map(l => `
+      <div class="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-high/60">
+        <span class="material-symbols-outlined text-[16px] ${colorFor[l.level] || 'text-fire'}">${iconFor[l.level] || 'info'}</span>
+        <div class="flex flex-col min-w-0">
+          <span class="text-xs text-ink truncate">${l.text}</span>
+          <span class="text-[10px] text-muted">${l.date}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  renderLeaders(); renderDeputies(); loadOfficials(); refreshPasswordDisplay();
+  renderStatsGrid(); loadToggles(); renderLog();
+</script>
+</body>
+</html>
