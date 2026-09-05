@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>بلاك فاير | البنك</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/theme.css"/>
+</head>
+<body class="bg-base text-ink font-body flex flex-col min-h-screen relative overflow-x-hidden">
+<div class="ember-field"></div>
+
+<header class="fixed top-0 w-full z-40 pt-safe glass-strong">
+  <div class="h-16 px-4 flex items-center justify-between max-w-lg mx-auto">
+    <a href="index.html" class="w-10 h-10 rounded-xl bg-surface-high/70 flex items-center justify-center text-muted hover:text-fire transition-colors">
+      <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+    </a>
+    <div class="flex flex-col items-center leading-tight">
+      <span class="font-display text-sm font-bold text-fire-light">خزينة بلاك فاير</span>
+      <span class="text-[9px] text-muted tracking-widest">BLACK VAULT</span>
+    </div>
+    <button onclick="renderLedgerModal()" class="w-10 h-10 rounded-xl bg-surface-high/70 flex items-center justify-center text-muted hover:text-fire transition-colors">
+      <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+    </button>
+  </div>
+</header>
+
+<main class="flex-1 w-full pt-20 pb-28 max-w-lg mx-auto px-4 space-y-4 relative z-10">
+
+  <!-- Member header -->
+  <div class="card p-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-full bg-surface-highest emblem-ring flex items-center justify-center text-xl">🔥</div>
+      <div class="flex flex-col">
+        <div class="flex items-center gap-1.5">
+          <span class="font-bold text-sm text-fire-light" id="member-name">لوفي</span>
+          <span class="pill bg-surface-highest text-muted px-1.5 py-0.5">#BF-0001</span>
+        </div>
+        <span class="text-[11px] text-gold mt-0.5">⚡ القائد • عضو مؤسس</span>
+      </div>
+    </div>
+    <button class="btn-ghost rounded-lg px-2.5 py-1.5 text-[11px] font-bold flex items-center gap-1">
+      ملف العضو <span class="material-symbols-outlined text-[15px]">badge</span>
+    </button>
+  </div>
+
+  <!-- Balance vault -->
+  <div class="card p-5 relative overflow-hidden">
+    <div class="absolute -top-14 left-1/4 w-40 h-40 bg-fire/10 rounded-full blur-3xl"></div>
+    <div class="relative z-10 flex flex-col items-center text-center">
+      <div class="relative flex items-center justify-center mb-1">
+        <div class="absolute w-24 h-24 rounded-full bg-fire/15 blur-xl flame-pulse"></div>
+        <div class="relative w-20 h-20 flex items-center justify-center">
+          <svg viewBox="0 0 48 48" class="w-16 h-16"><path fill="#ff7a1a" d="M24 3c3 6-2 8-2 13 0 4 3 6 6 6 4 0 6-4 6-4s2 9-4 15c-4 4-9 5-13 3-5-2-8-7-7-13 1-7 6-8 6-13 0-4-2-6-2-6s6-3 10-1z"/></svg>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 text-muted">
+        <span class="material-symbols-outlined text-[15px] text-fire">local_fire_department</span>
+        <span class="text-[11px] tracking-widest uppercase font-bold">الرصيد المتاح</span>
+      </div>
+      <div class="flex items-baseline justify-center gap-2 mt-1">
+        <span id="my-balance" class="font-display text-4xl font-bold text-ink">0</span>
+        <span class="text-lg text-fire font-semibold">EMD</span>
+      </div>
+      <div class="inline-flex items-center gap-1.5 bg-base/70 text-muted px-3 py-1 rounded-full mt-2">
+        <span class="material-symbols-outlined text-[15px] text-fire">trending_up</span>
+        <span class="text-xs font-bold text-fire-light" dir="ltr">+2,500 EMD</span>
+        <span class="text-[11px] text-muted">هذا الشهر</span>
+      </div>
+    </div>
+    <div class="relative z-10 mt-5 pt-3.5 bg-base/60 rounded-xl p-1.5 flex items-center justify-between">
+      <button onclick="openSend()" class="flex-1 flex items-center justify-center gap-1.5 py-2 text-ink hover:text-fire transition-colors">
+        <span class="material-symbols-outlined text-[19px]">send</span>
+        <span class="text-xs font-bold">إرسال</span>
+      </button>
+      <div class="w-[1px] h-6 bg-line"></div>
+      <button onclick="openReceive()" class="flex-1 flex items-center justify-center gap-1.5 py-2 text-ink hover:text-fire transition-colors">
+        <span class="material-symbols-outlined text-[19px] text-fire">download</span>
+        <span class="text-xs font-bold">استلام</span>
+      </button>
+      <div class="w-[1px] h-6 bg-line"></div>
+      <button onclick="renderLedgerModal()" class="flex-1 flex items-center justify-center gap-1.5 py-2 text-ink hover:text-fire transition-colors">
+        <span class="material-symbols-outlined text-[19px]">history</span>
+        <span class="text-xs font-bold">السجل</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Quick metrics -->
+  <div class="grid grid-cols-4 gap-2">
+    <div class="card flex flex-col items-center justify-center p-2.5">
+      <span class="material-symbols-outlined text-[19px] text-fire mb-1">payments</span>
+      <span class="text-[10px] text-muted">الرصيد</span>
+      <span class="text-xs font-bold text-ink mt-0.5" id="metric-balance">0</span>
+    </div>
+    <div class="card flex flex-col items-center justify-center p-2.5">
+      <span class="material-symbols-outlined text-[19px] text-gold mb-1">monitoring</span>
+      <span class="text-[10px] text-muted">الأرباح</span>
+      <span class="text-xs font-bold text-fire-light mt-0.5" dir="ltr">+3,200</span>
+    </div>
+    <div class="card flex flex-col items-center justify-center p-2.5">
+      <span class="material-symbols-outlined text-[19px] text-ember mb-1">military_tech</span>
+      <span class="text-[10px] text-muted">الجوائز</span>
+      <span class="text-xs font-bold text-ink mt-0.5">5</span>
+    </div>
+    <div class="card flex flex-col items-center justify-center p-2.5">
+      <span class="material-symbols-outlined text-[19px] text-fire mb-1">stars</span>
+      <span class="text-[10px] text-muted">النقاط</span>
+      <span class="text-xs font-bold text-ink mt-0.5">8,750</span>
+    </div>
+  </div>
+
+  <!-- Growth chart -->
+  <div class="card p-3.5">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-bold text-fire-light flex items-center gap-1.5"><span class="w-1.5 h-3.5 rounded-full bg-fire shadow-fire"></span> تطور الرصيد</span>
+      <span class="text-[10px] text-muted bg-surface-high px-2 py-1 rounded-lg">هذا الشهر</span>
+    </div>
+    <div class="relative w-full h-28">
+      <svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 340 100">
+        <defs>
+          <linearGradient id="fireArea" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ff7a1a" stop-opacity="0.32"/>
+            <stop offset="100%" stop-color="#ff7a1a" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="fireStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffc247"/>
+            <stop offset="50%" stop-color="#ff7a1a"/>
+            <stop offset="100%" stop-color="#ff3b30"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" x2="340" y1="20" y2="20" stroke="#2a1a0e" stroke-dasharray="3 3" stroke-width="0.8"/>
+        <line x1="0" x2="340" y1="55" y2="55" stroke="#2a1a0e" stroke-dasharray="3 3" stroke-width="0.8"/>
+        <path d="M 0,85 C 40,82 70,68 110,65 C 150,62 180,75 220,68 C 260,60 290,40 340,25 L 340,95 L 0,95 Z" fill="url(#fireArea)"/>
+        <path d="M 0,85 C 40,82 70,68 110,65 C 150,62 180,75 220,68 C 260,60 290,40 340,25" fill="none" stroke="url(#fireStroke)" stroke-linecap="round" stroke-width="2.5"/>
+        <circle cx="340" cy="25" r="4.5" fill="#ff7a1a"/>
+      </svg>
+    </div>
+    <div class="flex justify-between text-[10px] text-muted pt-1">
+      <span>1 أغسطس</span><span>8 أغسطس</span><span>15 أغسطس</span><span>22 أغسطس</span><span class="text-fire font-semibold">29 أغسطس</span>
+    </div>
+  </div>
+
+  <!-- Pending requests -->
+  <div class="card p-3.5">
+    <div class="flex items-center justify-between mb-2.5">
+      <span class="text-sm font-bold text-fire-light flex items-center gap-1.5"><span class="material-symbols-outlined text-[18px] text-fire">admin_panel_settings</span> الطلبات وموافقة الإدارة</span>
+      <span class="text-[10px] text-muted bg-surface-highest px-2 py-0.5 rounded-full" id="pending-count">0 مهام</span>
+    </div>
+    <div id="requests-list" class="space-y-2"></div>
+  </div>
+
+  <!-- Ledger preview -->
+  <div class="card p-3.5">
+    <div class="flex items-center justify-between pb-2">
+      <span class="text-sm font-bold text-fire-light">آخر العمليات المصرفية</span>
+      <button onclick="renderLedgerModal()" class="text-[11px] text-fire font-bold">عرض الكل</button>
+    </div>
+    <div id="ledger-preview" class="space-y-1"></div>
+  </div>
+
+  <div class="card p-3 flex items-center gap-2.5">
+    <span class="material-symbols-outlined text-[20px] text-fire">shield</span>
+    <div class="flex flex-col min-w-0">
+      <span class="text-xs font-semibold text-ink">حماية الخزينة المشفرة مفعّلة</span>
+      <span class="text-[10px] text-muted">جميع العمليات تخضع لبروتوكول بلاك فاير الداخلي</span>
+    </div>
+  </div>
+</main>
+
+<nav class="fixed bottom-0 w-full z-40 pb-safe glass-strong">
+  <div class="flex justify-around items-center h-16 max-w-lg mx-auto px-2">
+    <a href="index.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">home</span>
+      <span class="text-[10px] font-medium mt-0.5">الرئيسية</span>
+    </a>
+    <a href="bank.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-fire shadow-fire">
+      <span class="material-symbols-outlined text-[22px]">account_balance</span>
+      <span class="text-[10px] font-bold mt-0.5">البنك</span>
+    </a>
+    <a href="store.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">storefront</span>
+      <span class="text-[10px] font-medium mt-0.5">المتجر</span>
+    </a>
+    <a href="admin-command.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">shield_person</span>
+      <span class="text-[10px] font-medium mt-0.5">القيادة</span>
+    </a>
+    <a href="admin-bank.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+      <span class="text-[10px] font-medium mt-0.5">إدارة البنك</span>
+    </a>
+  </div>
+</nav>
+
+<script src="assets/app.js"></script>
+<script>
+  const db = BlackFire.load();
+  const me = db.members[0];
+  document.getElementById("member-name").textContent = me.name;
+  document.getElementById("my-balance").textContent = BlackFire.money(me.balance);
+  document.getElementById("metric-balance").textContent = BlackFire.money(me.balance);
+
+  const pending = db.bankRequests.filter(r => r.status === "قيد المراجعة");
+  document.getElementById("pending-count").textContent = `${pending.length} مهام نشطة`;
+  const reqList = document.getElementById("requests-list");
+  reqList.innerHTML = db.bankRequests.slice(0, 3).map(r => {
+    const badge = r.status === "قيد المراجعة" ? `<span class="flex items-center gap-1 text-gold bg-surface-highest/80 px-2 py-1 rounded-md text-[10px] font-bold"><span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>قيد المراجعة</span>`
+      : r.status === "مقبول" ? `<span class="text-fire bg-surface-highest/80 px-2 py-1 rounded-md text-[10px] font-bold">مقبول</span>`
+      : `<span class="text-ember bg-surface-highest/80 px-2 py-1 rounded-md text-[10px] font-bold">مرفوض</span>`;
+    return `
+    <div class="rounded-lg bg-surface-high/70 p-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg bg-surface-highest flex items-center justify-center">
+          <span class="material-symbols-outlined text-fire-light text-[18px]">${r.type === "سحب" ? "outbox" : "move_to_inbox"}</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xs font-semibold text-ink">${r.type} خزينة • ${BlackFire.money(r.amount)} EMD</span>
+          <span class="text-[10px] text-muted">${r.member}</span>
+        </div>
+      </div>
+      ${badge}
+    </div>`;
+  }).join("");
+
+  const ledgerPreview = document.getElementById("ledger-preview");
+  function renderLedgerPreview() {
+    ledgerPreview.innerHTML = db.ledger.slice(0, 4).map(l => `
+      <div class="py-2 flex items-center justify-between rounded-lg px-1">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-surface-high flex items-center justify-center">
+            <span class="material-symbols-outlined text-[18px] ${l.amount > 0 ? 'text-fire' : 'text-ember'}">${l.amount > 0 ? 'add_circle' : 'shopping_bag'}</span>
+          </div>
+          <span class="text-xs font-medium text-ink">${l.text}</span>
+        </div>
+        <div class="flex flex-col items-end">
+          <span class="text-xs font-bold ${l.amount > 0 ? 'text-fire' : 'text-ember'}" dir="ltr">${l.amount > 0 ? '+' : ''}${BlackFire.money(l.amount)} EMD</span>
+          <span class="text-[9px] text-muted">${l.date}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+  renderLedgerPreview();
+
+  function renderLedgerModal() {
+    BlackFire.openModal(`
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-base text-ink">السجل الكامل للعمليات</h3>
+        <button onclick="BlackFire.closeModal()" class="text-muted"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="space-y-1 max-h-[60vh] overflow-y-auto">
+        ${db.ledger.map(l => `
+          <div class="py-2.5 flex items-center justify-between border-b border-line-soft">
+            <div class="flex flex-col">
+              <span class="text-xs font-medium text-ink">${l.text}</span>
+              <span class="text-[10px] text-muted">${l.date}</span>
+            </div>
+            <span class="text-xs font-bold ${l.amount > 0 ? 'text-fire' : 'text-ember'}" dir="ltr">${l.amount > 0 ? '+' : ''}${BlackFire.money(l.amount)} EMD</span>
+          </div>
+        `).join("")}
+      </div>
+    `);
+  }
+
+  function openSend() {
+    BlackFire.openModal(`
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-base text-ink flex items-center gap-2"><span class="material-symbols-outlined text-fire">send</span> إرسال رصيد</h3>
+        <button onclick="BlackFire.closeModal()" class="text-muted"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="text-[11px] text-muted mb-1 block">اسم العضو المستلم</label>
+          <input id="send-name" class="field w-full px-3 py-2.5 text-sm" placeholder="مثال: باتريك جين"/>
+        </div>
+        <div>
+          <label class="text-[11px] text-muted mb-1 block">المبلغ (EMD)</label>
+          <input id="send-amount" type="number" class="field w-full px-3 py-2.5 text-sm" placeholder="0"/>
+        </div>
+        <button onclick="confirmSend()" class="btn-fire w-full py-3 rounded-xl text-sm">تأكيد الإرسال</button>
+      </div>
+    `);
+  }
+  function confirmSend() {
+    const name = document.getElementById("send-name").value.trim();
+    const amount = Number(document.getElementById("send-amount").value);
+    if (!name || !amount || amount <= 0) { BlackFire.toast("بيانات غير مكتملة", "أدخل اسم العضو والمبلغ", "error"); return; }
+    if (amount > me.balance) { BlackFire.toast("رصيد غير كافٍ", "", "error"); return; }
+    me.balance -= amount;
+    db.ledger.unshift({ id: BlackFire.uid("led"), text: `تحويل صادر إلى ${name}`, amount: -amount, date: "الآن" });
+    BlackFire.save(db);
+    BlackFire.closeModal();
+    document.getElementById("my-balance").textContent = BlackFire.money(me.balance);
+    document.getElementById("metric-balance").textContent = BlackFire.money(me.balance);
+    renderLedgerPreview();
+    BlackFire.toast("تم الإرسال بنجاح", `${amount} EMD إلى ${name}`, "success");
+  }
+  function openReceive() {
+    BlackFire.openModal(`
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-base text-ink flex items-center gap-2"><span class="material-symbols-outlined text-fire">download</span> طلب استلام</h3>
+        <button onclick="BlackFire.closeModal()" class="text-muted"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="text-[11px] text-muted mb-1 block">المبلغ المطلوب (EMD)</label>
+          <input id="recv-amount" type="number" class="field w-full px-3 py-2.5 text-sm" placeholder="0"/>
+        </div>
+        <p class="text-[11px] text-muted">سيتم إرسال طلبك إلى مسؤول البنك للمراجعة والموافقة.</p>
+        <button onclick="confirmReceive()" class="btn-fire w-full py-3 rounded-xl text-sm">إرسال الطلب</button>
+      </div>
+    `);
+  }
+  function confirmReceive() {
+    const amount = Number(document.getElementById("recv-amount").value);
+    if (!amount || amount <= 0) { BlackFire.toast("أدخل مبلغًا صحيحًا", "", "error"); return; }
+    db.bankRequests.unshift({ id: BlackFire.uid("req"), member: me.name, type: "سحب", amount, status: "قيد المراجعة", date: "الآن" });
+    BlackFire.save(db);
+    BlackFire.closeModal();
+    BlackFire.toast("تم إرسال طلبك", "بانتظار موافقة مسؤول البنك", "success");
+  }
+</script>
+</body>
+</html>

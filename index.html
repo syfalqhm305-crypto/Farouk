@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>بلاك فاير | البوابة الرئيسية</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/theme.css"/>
+</head>
+<body class="bg-base text-ink font-body flex flex-col min-h-screen relative overflow-x-hidden">
+<div class="ember-field"></div>
+
+<!-- Header -->
+<header class="fixed top-0 w-full z-40 pt-safe glass-strong">
+  <div class="h-16 px-4 flex items-center justify-between max-w-lg mx-auto">
+    <div class="flex items-center gap-2.5">
+      <div class="w-10 h-10 rounded-xl bg-surface-highest emblem-ring flex items-center justify-center">
+        <svg viewBox="0 0 48 48" class="w-6 h-6"><path fill="#ff7a1a" d="M24 3c3 6-2 8-2 13 0 4 3 6 6 6 4 0 6-4 6-4s2 9-4 15c-4 4-9 5-13 3-5-2-8-7-7-13 1-7 6-8 6-13 0-4-2-6-2-6s6-3 10-1z"/></svg>
+      </div>
+      <div class="flex flex-col leading-tight">
+        <span class="font-display text-lg font-bold text-fire-light tracking-tight">بلاك فاير</span>
+        <span class="text-[10px] text-muted tracking-widest">BLACK FIRE STORE</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <button class="w-10 h-10 rounded-xl bg-surface-high/70 flex items-center justify-center text-muted hover:text-fire transition-colors relative" onclick="BlackFire.toast('لا إشعارات جديدة','','info')">
+        <span class="material-symbols-outlined text-[20px]">notifications</span>
+        <span class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-fire shadow-fire"></span>
+      </button>
+      <a href="admin-store.html" class="w-10 h-10 rounded-xl bg-surface-high/70 flex items-center justify-center text-muted hover:text-fire transition-colors">
+        <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="flex-1 w-full pt-20 pb-28 max-w-lg mx-auto px-4 space-y-4 relative z-10">
+
+  <!-- Hero emblem card -->
+  <div class="card p-6 flex flex-col items-center text-center overflow-hidden relative">
+    <div class="absolute -top-10 w-44 h-44 rounded-full bg-fire/10 blur-3xl"></div>
+    <div class="relative w-28 h-28 rounded-2xl bg-surface-highest emblem-ring flex items-center justify-center mb-3 flame-pulse">
+      <svg viewBox="0 0 48 48" class="w-16 h-16"><path fill="#ff7a1a" d="M24 3c3 6-2 8-2 13 0 4 3 6 6 6 4 0 6-4 6-4s2 9-4 15c-4 4-9 5-13 3-5-2-8-7-7-13 1-7 6-8 6-13 0-4-2-6-2-6s6-3 10-1z"/></svg>
+    </div>
+    <h1 class="font-display text-2xl font-extrabold text-ink tracking-tight">BLACK FIRE</h1>
+    <p class="text-sm text-fire-light font-semibold mt-1">مرحباً بك في متجر بلاك فاير 🔥</p>
+    <p class="text-xs text-muted mt-1 max-w-[280px]">بوابتك الموحدة للمتجر والخزينة — تسوّق، حوّل رصيدك، وتابع كل شيء من مكان واحد.</p>
+  </div>
+
+  <!-- Portal cards: Bank / Store -->
+  <div class="grid grid-cols-2 gap-3">
+    <a href="bank.html" class="card p-4 flex flex-col items-center text-center gap-2 active:scale-95 transition-transform">
+      <div class="w-12 h-12 rounded-xl bg-fire/10 border border-fire/30 flex items-center justify-center">
+        <span class="material-symbols-outlined text-fire text-[24px]">account_balance</span>
+      </div>
+      <span class="font-bold text-sm text-ink">بوابة البنك</span>
+      <span class="text-[10px] text-muted">رصيدك وتحويلاتك</span>
+    </a>
+    <a href="store.html" class="card p-4 flex flex-col items-center text-center gap-2 active:scale-95 transition-transform">
+      <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center">
+        <span class="material-symbols-outlined text-gold text-[24px]">storefront</span>
+      </div>
+      <span class="font-bold text-sm text-ink">بوابة المتجر</span>
+      <span class="text-[10px] text-muted">تصفح وشراء السلع</span>
+    </a>
+  </div>
+
+  <!-- Liquidity ticker -->
+  <div class="card p-4 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <span class="material-symbols-outlined text-fire">payments</span>
+      <div class="flex flex-col">
+        <span class="text-[11px] text-muted">إجمالي سيولة النقابة</span>
+        <span id="hero-balance" class="font-display text-xl font-bold text-ink">0 EMD</span>
+      </div>
+    </div>
+    <span class="pill px-2.5 py-1 bg-fire/10 text-fire border border-fire/30">مباشر</span>
+  </div>
+
+  <!-- Sections -->
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-bold text-sm text-ink flex items-center gap-1.5"><span class="material-symbols-outlined text-fire text-[18px]">folder_open</span> أقسام المتجر</h2>
+    </div>
+    <div id="sections-list" class="space-y-2"></div>
+  </div>
+
+  <!-- Featured items -->
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-bold text-sm text-ink flex items-center gap-1.5"><span class="material-symbols-outlined text-gold text-[18px]">star</span> سلع مميزة</h2>
+      <a href="store.html" class="text-[11px] text-fire font-bold">عرض الكل</a>
+    </div>
+    <div id="featured-items" class="space-y-2.5"></div>
+  </div>
+
+  <!-- Leadership -->
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-bold text-sm text-ink flex items-center gap-1.5"><span class="material-symbols-outlined text-fire text-[18px]">military_tech</span> مسؤول المتجر</h2>
+    </div>
+    <div id="leader-card" class="flex items-center justify-between"></div>
+  </div>
+
+  <div class="text-center text-[10px] text-muted-dim pt-2 pb-4">جميع العمليات محمية ببروتوكول تشفير بلاك فاير الداخلي</div>
+</main>
+
+<!-- Bottom nav -->
+<nav class="fixed bottom-0 w-full z-40 pb-safe glass-strong">
+  <div class="flex justify-around items-center h-16 max-w-lg mx-auto px-2">
+    <a href="index.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-fire shadow-fire">
+      <span class="material-symbols-outlined text-[22px]">home</span>
+      <span class="text-[10px] font-bold mt-0.5">الرئيسية</span>
+    </a>
+    <a href="bank.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">account_balance</span>
+      <span class="text-[10px] font-medium mt-0.5">البنك</span>
+    </a>
+    <a href="store.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">storefront</span>
+      <span class="text-[10px] font-medium mt-0.5">المتجر</span>
+    </a>
+    <a href="admin-command.html" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">shield_person</span>
+      <span class="text-[10px] font-medium mt-0.5">القيادة</span>
+    </a>
+    <button onclick="openGuide()" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-muted hover:text-fire-light transition-colors">
+      <span class="material-symbols-outlined text-[22px]">menu_open</span>
+      <span class="text-[10px] font-medium mt-0.5">المزيد</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Floating help -->
+<button onclick="openGuide()" class="fixed bottom-24 left-4 z-40 w-11 h-11 rounded-full btn-fire flex items-center justify-center shadow-fire">
+  <span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+
+<script src="assets/app.js"></script>
+<script>
+  const db = BlackFire.load();
+
+  document.getElementById("hero-balance").textContent = BlackFire.money(db.stats.totalBalances) + " EMD";
+
+  const sectionsList = document.getElementById("sections-list");
+  if (db.sections.length === 0) {
+    sectionsList.innerHTML = `<p class="text-xs text-muted text-center py-3">لا توجد سلع في هذا القسم</p>`;
+  } else {
+    sectionsList.innerHTML = db.sections.map(s => {
+      const count = db.items.filter(i => i.section === s.name).length;
+      return `
+      <div class="flex items-center justify-between p-3 rounded-xl bg-surface-high/60 border border-line-soft">
+        <div class="flex items-center gap-2.5">
+          <span class="material-symbols-outlined text-fire text-[18px]">folder</span>
+          <span class="text-sm font-semibold text-ink">${s.name}</span>
+        </div>
+        <span class="text-[11px] text-muted">${count} سلعة</span>
+      </div>`;
+    }).join("");
+  }
+
+  const featured = document.getElementById("featured-items");
+  if (db.items.length === 0) {
+    featured.innerHTML = `<p class="text-xs text-muted text-center py-3">لا نوجد سلع في هذا القسم</p>`;
+  } else {
+    featured.innerHTML = db.items.slice(0, 3).map(it => `
+      <div class="flex items-center justify-between p-3 rounded-xl bg-surface-high/60 border border-line-soft">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-lg bg-base flex items-center justify-center border border-fire/20">
+            <span class="material-symbols-outlined text-fire text-[20px]">local_fire_department</span>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-ink">${it.name}</h4>
+            <span class="text-[11px] font-bold text-fire">${BlackFire.money(it.priceEmd)} EMD</span>
+            <span class="text-[10px] text-muted"> · $${it.priceUsd}</span>
+          </div>
+        </div>
+        <a href="store.html" class="px-3 py-1.5 rounded-lg btn-fire text-[11px]">شراء</a>
+      </div>
+    `).join("");
+  }
+
+  const leaderCard = document.getElementById("leader-card");
+  const so = db.storeOfficial;
+  leaderCard.innerHTML = `
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-full bg-surface-highest emblem-ring flex items-center justify-center text-xl">${so.avatar}</div>
+      <div>
+        <p class="text-sm font-bold text-ink">${so.name}</p>
+        <p class="text-[11px] text-muted">${so.title}</p>
+      </div>
+    </div>
+    <a href="${BlackFire.waLink(so.phone, 'مرحباً، أتواصل معكم من متجر بلاك فاير')}" target="_blank" class="px-3 py-2 rounded-lg btn-fire text-[11px] flex items-center gap-1">
+      <span class="material-symbols-outlined text-[16px]">chat</span> تواصل مباشرة
+    </a>
+  `;
+
+  function openGuide() {
+    BlackFire.openModal(`
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-base text-ink flex items-center gap-2"><span class="material-symbols-outlined text-fire">menu_book</span> دليل الاستخدام</h3>
+        <button onclick="BlackFire.closeModal()" class="text-muted"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="flex gap-2 mb-4 overflow-x-auto">
+        <span class="tab-btn active">لمحة</span>
+        <span class="tab-btn">شراء</span>
+        <span class="tab-btn">حسابي</span>
+        <span class="tab-btn">دعم</span>
+      </div>
+      <h4 class="text-sm font-bold text-fire-light mb-2">كيفية تصفح المتجر:</h4>
+      <ol class="space-y-2 text-xs text-ink">
+        <li class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-high/60"><span class="w-5 h-5 rounded-full bg-fire text-base flex items-center justify-center text-[10px] font-bold">١</span> اختر القسم المناسب من الأقسام المعروضة</li>
+        <li class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-high/60"><span class="w-5 h-5 rounded-full bg-fire text-base flex items-center justify-center text-[10px] font-bold">٢</span> شاهد السلع المتاحة في كل قسم مع الأسعار</li>
+        <li class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-high/60"><span class="w-5 h-5 rounded-full bg-fire text-base flex items-center justify-center text-[10px] font-bold">٣</span> اضغط على "تفاصيل" لمعرفة مزيد عن أي سلعة</li>
+        <li class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-high/60"><span class="w-5 h-5 rounded-full bg-fire text-base flex items-center justify-center text-[10px] font-bold">٤</span> استخدم التمرير لظهور باقي الأقسام</li>
+      </ol>
+    `);
+  }
+</script>
+</body>
+</html>

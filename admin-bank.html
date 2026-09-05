@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>بلاك فاير | إدارة البنك</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/theme.css"/>
+</head>
+<body class="bg-base text-ink font-body flex flex-col min-h-screen relative overflow-x-hidden">
+<div class="ember-field"></div>
+
+<header class="fixed top-0 w-full z-40 pt-safe glass-strong">
+  <div class="h-16 px-4 flex items-center justify-between max-w-2xl mx-auto">
+    <a href="bank.html" class="flex items-center gap-1.5 text-[11px] text-muted hover:text-fire transition-colors">
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span> رجوع للبنك
+    </a>
+    <div class="flex flex-col items-center leading-tight">
+      <span class="font-display text-sm font-bold text-fire-light">إدارة البنك</span>
+      <span class="text-[9px] text-muted tracking-widest">VAULT CONTROL</span>
+    </div>
+    <a href="login.html" class="flex items-center gap-1.5 text-[11px] text-ember font-bold">خروج <span class="material-symbols-outlined text-[16px]">logout</span></a>
+  </div>
+</header>
+
+<main class="flex-1 w-full pt-20 pb-16 max-w-2xl mx-auto px-4 space-y-4 relative z-10">
+
+  <div class="card p-5 flex flex-col items-center text-center">
+    <div class="w-16 h-16 rounded-2xl bg-surface-highest emblem-ring flex items-center justify-center mb-2">
+      <span class="material-symbols-outlined text-fire text-[30px]">account_balance</span>
+    </div>
+    <p class="text-sm font-bold text-fire-light">مرحباً بك يا أمين الخزينة 🏦</p>
+    <p class="text-[11px] text-muted mt-0.5">لوحة تحكم خزينة بلاك فاير</p>
+  </div>
+
+  <div class="grid grid-cols-3 gap-2.5">
+    <div class="card p-3 flex flex-col items-center gap-1">
+      <span class="material-symbols-outlined text-fire text-[20px]">outbox</span>
+      <span id="stat-pending-withdraw" class="font-display text-lg font-bold text-ink">0</span>
+      <span class="text-[10px] text-muted text-center">طلبات سحب معلقة</span>
+    </div>
+    <div class="card p-3 flex flex-col items-center gap-1">
+      <span class="material-symbols-outlined text-fire text-[20px]">move_to_inbox</span>
+      <span id="stat-pending-deposit" class="font-display text-lg font-bold text-ink">0</span>
+      <span class="text-[10px] text-muted text-center">طلبات إيداع معلقة</span>
+    </div>
+    <div class="card p-3 flex flex-col items-center gap-1">
+      <span class="material-symbols-outlined text-gold text-[20px]">savings</span>
+      <span id="stat-total-balance" class="font-display text-lg font-bold text-ink">0</span>
+      <span class="text-[10px] text-muted text-center">إجمالي الأرصدة</span>
+    </div>
+    <div class="card p-3 flex flex-col items-center gap-1">
+      <span class="material-symbols-outlined text-fire text-[20px]">groups</span>
+      <span id="stat-members" class="font-display text-lg font-bold text-ink">0</span>
+      <span class="text-[10px] text-muted text-center">عدد الأعضاء</span>
+    </div>
+    <div class="card p-3 flex flex-col items-center gap-1">
+      <span class="material-symbols-outlined text-fire text-[20px]">sync_alt</span>
+      <span id="stat-transfers" class="font-display text-lg font-bold text-ink">0</span>
+      <span class="text-[10px] text-muted text-center">إجمالي التحويلات</span>
+    </div>
+    <div class="card p-3 flex flex-col items-center gap-1">
+      <span class="material-symbols-outlined text-ember text-[20px]">local_fire_department</span>
+      <span id="stat-raids" class="font-display text-lg font-bold text-ink">0</span>
+      <span class="text-[10px] text-muted text-center">عمليات الغارة</span>
+    </div>
+  </div>
+
+  <div class="flex gap-2 overflow-x-auto pb-1" data-tab-group>
+    <button class="tab-btn active" data-tab-target="#panel-requests">طلبات السحب والإيداع</button>
+    <button class="tab-btn" data-tab-target="#panel-members">الأعضاء وأرصدتهم</button>
+  </div>
+
+  <div id="panel-requests" class="tab-panel active space-y-3">
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-bold text-fire-light">طلبات الخزينة</h3>
+        <span id="req-count" class="pill px-2 py-0.5 bg-fire/10 text-fire"></span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="tbl">
+          <thead><tr><th>العضو</th><th>النوع</th><th>المبلغ</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+          <tbody id="req-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-members" class="tab-panel space-y-3">
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-bold text-fire-light">أرصدة الأعضاء</h3>
+        <button onclick="openAdjustBalance()" class="btn-fire text-[11px] px-3 py-2 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">tune</span> تعديل رصيد</button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="tbl">
+          <thead><tr><th>العضو</th><th>الرتبة</th><th>الرصيد (EMD)</th></tr></thead>
+          <tbody id="members-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+  BlackFire.requireAdmin();
+  BlackFire.initTabs();
+  const db = BlackFire.load();
+
+  function refreshStats() {
+    document.getElementById("stat-pending-withdraw").textContent = db.bankRequests.filter(r => r.type === "سحب" && r.status === "قيد المراجعة").length;
+    document.getElementById("stat-pending-deposit").textContent = db.bankRequests.filter(r => r.type === "إيداع" && r.status === "قيد المراجعة").length;
+    document.getElementById("stat-total-balance").textContent = BlackFire.money(db.members.reduce((a, m) => a + m.balance, 0));
+    document.getElementById("stat-members").textContent = db.members.length;
+    document.getElementById("stat-transfers").textContent = BlackFire.money(db.stats.transfers);
+    document.getElementById("stat-raids").textContent = db.stats.raids;
+  }
+
+  function statusClass(s) {
+    if (s === "قيد المراجعة") return "bg-gold/10 text-gold";
+    if (s === "مقبول") return "bg-fire/10 text-fire";
+    return "bg-ember/10 text-ember";
+  }
+
+  function renderRequests() {
+    document.getElementById("req-count").textContent = `${db.bankRequests.length} طلب`;
+    document.getElementById("req-tbody").innerHTML = db.bankRequests.map(r => `
+      <tr>
+        <td>${r.member}</td>
+        <td>${r.type}</td>
+        <td>${BlackFire.money(r.amount)} EMD</td>
+        <td><span class="pill px-2 py-0.5 ${statusClass(r.status)}">${r.status}</span></td>
+        <td class="flex gap-1.5">
+          <button onclick="setReqStatus('${r.id}','مقبول')" class="btn-ghost text-[10px] px-2 py-1 rounded-md">قبول</button>
+          <button onclick="setReqStatus('${r.id}','مرفوض')" class="btn-danger text-[10px] px-2 py-1 rounded-md">رفض</button>
+        </td>
+      </tr>
+    `).join("");
+  }
+  function setReqStatus(id, status) {
+    const r = db.bankRequests.find(x => x.id === id);
+    if (!r) return;
+    if (status === "مقبول" && r.status !== "مقبول") {
+      const member = db.members.find(m => m.name === r.member);
+      if (member) {
+        if (r.type === "إيداع") member.balance += r.amount;
+        else member.balance = Math.max(0, member.balance - r.amount);
+      }
+    }
+    r.status = status;
+    BlackFire.save(db);
+    renderRequests(); renderMembers(); refreshStats();
+    BlackFire.toast("تم تحديث الطلب", status, "success");
+  }
+
+  function renderMembers() {
+    document.getElementById("members-tbody").innerHTML = db.members.map(m => `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.role}</td>
+        <td class="font-bold text-fire">${BlackFire.money(m.balance)}</td>
+      </tr>
+    `).join("");
+  }
+
+  function openAdjustBalance() {
+    const opts = db.members.map(m => `<option value="${m.id}">${m.name}</option>`).join("");
+    BlackFire.openModal(`
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-base text-ink">تعديل رصيد عضو</h3>
+        <button onclick="BlackFire.closeModal()" class="text-muted"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="space-y-3">
+        <select id="adj-member" class="field w-full px-3 py-2.5 text-sm">${opts}</select>
+        <input id="adj-amount" type="number" class="field w-full px-3 py-2.5 text-sm" placeholder="القيمة (استخدم سالبًا للخصم)"/>
+        <button onclick="submitAdjust()" class="btn-fire w-full py-3 rounded-xl text-sm">تطبيق</button>
+      </div>
+    `);
+  }
+  function submitAdjust() {
+    const id = document.getElementById("adj-member").value;
+    const amount = Number(document.getElementById("adj-amount").value);
+    const m = db.members.find(x => x.id === id);
+    if (!m || !amount) { BlackFire.toast("أدخل قيمة صحيحة", "", "error"); return; }
+    m.balance = Math.max(0, m.balance + amount);
+    BlackFire.save(db); BlackFire.closeModal(); renderMembers(); refreshStats();
+    BlackFire.toast("تم تعديل الرصيد", m.name, "success");
+  }
+
+  refreshStats(); renderRequests(); renderMembers();
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>بلاك فاير | تسجيل الدخول</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/theme.css"/>
+</head>
+<body class="bg-base text-ink font-body min-h-screen flex items-center justify-center relative overflow-x-hidden px-5">
+<div class="ember-field"></div>
+
+<div class="w-full max-w-sm relative z-10">
+  <div class="flex flex-col items-center text-center mb-6">
+    <div class="w-20 h-20 rounded-2xl bg-surface-highest emblem-ring flex items-center justify-center mb-3 flame-pulse">
+      <svg viewBox="0 0 48 48" class="w-11 h-11"><path fill="#ff7a1a" d="M24 3c3 6-2 8-2 13 0 4 3 6 6 6 4 0 6-4 6-4s2 9-4 15c-4 4-9 5-13 3-5-2-8-7-7-13 1-7 6-8 6-13 0-4-2-6-2-6s6-3 10-1z"/></svg>
+    </div>
+    <h1 class="font-display text-xl font-extrabold text-ink">لوحة تحكم بلاك فاير</h1>
+    <p class="text-xs text-muted mt-1">التحقق المشفر مطلوب للوصول إلى لوحات القيادة</p>
+  </div>
+
+  <div class="card p-5">
+    <div class="flex gap-2 mb-5" data-tab-group>
+      <button class="tab-btn active flex-1" data-tab-target="#tab-command">القيادة</button>
+      <button class="tab-btn flex-1" data-tab-target="#tab-store">المتجر</button>
+      <button class="tab-btn flex-1" data-tab-target="#tab-bank">البنك</button>
+    </div>
+
+    <div id="tab-command" class="tab-panel active space-y-3">
+      <label class="text-[11px] text-muted block">باسورد لوحة القيادة</label>
+      <div class="relative">
+        <input id="pass-command" type="password" class="field w-full px-3 py-2.5 text-sm" placeholder="••••••••"/>
+        <button onclick="togglePass('pass-command')" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+      </div>
+      <button onclick="login('admin','admin-command.html','pass-command')" class="btn-fire w-full py-3 rounded-xl text-sm">دخول لوحة القيادة</button>
+    </div>
+
+    <div id="tab-store" class="tab-panel space-y-3">
+      <label class="text-[11px] text-muted block">باسورد المتجر</label>
+      <div class="relative">
+        <input id="pass-store" type="password" class="field w-full px-3 py-2.5 text-sm" placeholder="••••••••"/>
+        <button onclick="togglePass('pass-store')" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+      </div>
+      <button onclick="login('store','admin-store.html','pass-store')" class="btn-fire w-full py-3 rounded-xl text-sm">دخول إدارة المتجر</button>
+    </div>
+
+    <div id="tab-bank" class="tab-panel space-y-3">
+      <label class="text-[11px] text-muted block">باسورد البنك</label>
+      <div class="relative">
+        <input id="pass-bank" type="password" class="field w-full px-3 py-2.5 text-sm" placeholder="••••••••"/>
+        <button onclick="togglePass('pass-bank')" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+      </div>
+      <button onclick="login('bank','admin-bank.html','pass-bank')" class="btn-fire w-full py-3 rounded-xl text-sm">دخول إدارة البنك</button>
+    </div>
+  </div>
+
+  <a href="index.html" class="block text-center text-xs text-muted mt-5">رجوع للمتجر ←</a>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+  BlackFire.initTabs();
+  const db = BlackFire.load();
+
+  function togglePass(id) {
+    const el = document.getElementById(id);
+    el.type = el.type === "password" ? "text" : "password";
+  }
+
+  function login(role, dest, inputId) {
+    const val = document.getElementById(inputId).value;
+    const map = { admin: db.passwords.admin, store: db.passwords.store, bank: db.passwords.bank };
+    if (val === map[role]) {
+      sessionStorage.setItem("bf_admin_ok", "1");
+      sessionStorage.setItem("bf_admin_role", role);
+      BlackFire.toast("تم التحقق بنجاح", "جارِ تحويلك إلى اللوحة...", "success");
+      setTimeout(() => window.location.href = dest, 500);
+    } else {
+      BlackFire.toast("باسورد غير صحيح", "تحقق من البيانات وأعد المحاولة", "error");
+    }
+  }
+</script>
+</body>
+</html>
