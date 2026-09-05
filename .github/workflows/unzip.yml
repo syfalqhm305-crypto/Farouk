@@ -1,0 +1,76 @@
+name: Extract Black Fire Website
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Find and extract ZIP
+        shell: bash
+        run: |
+          set -e
+
+          ZIP_FILE=$(find . -maxdepth 1 -type f -iname "*.zip" | head -n 1)
+
+          if [ -z "$ZIP_FILE" ]; then
+            echo "❌ لم يتم العثور على ملف ZIP في المستودع"
+            exit 1
+          fi
+
+          echo "📦 ملف ZIP: $ZIP_FILE"
+
+          rm -rf _extract
+          mkdir -p _extract
+
+          unzip -o "$ZIP_FILE" -d _extract
+
+          echo "📂 محتويات ZIP:"
+          find _extract -maxdepth 3 -type f
+
+      - name: Put website files in repository root
+        shell: bash
+        run: |
+          set -e
+
+          # الملف الذي رفعته يحتوي على مجلد blackfire/
+          if [ -d "_extract/blackfire" ]; then
+            echo "✅ وجدنا مجلد blackfire"
+
+            cp -a _extract/blackfire/. .
+
+          else
+            echo "⚠️ لم يوجد مجلد blackfire، سيتم استخدام المحتويات مباشرة"
+
+            cp -a _extract/. .
+          fi
+
+          # حذف ملف ZIP ومجلد الاستخراج
+          rm -rf _extract
+
+          # لا نحذف workflow حتى لا يتوقف GitHub Actions
+          echo "📁 الملفات النهائية:"
+          find . -maxdepth 2 -type f | sort
+
+      - name: Commit extracted website
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "ℹ️ لا توجد تغييرات جديدة"
+          else
+            git commit -m "Extract Black Fire website from ZIP"
+            git push
+          fi
